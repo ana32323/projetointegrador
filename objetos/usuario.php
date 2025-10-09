@@ -2,11 +2,21 @@
 
 class Usuario {
     public $id;
+
     public $nome;
+
     public $email;
+
     public $senha;
+
     public $endereco;
+
     public $telefone;
+
+    public $tipo;
+
+    private $bd;
+
 
     private $bd;
 
@@ -14,24 +24,32 @@ class Usuario {
         $this->bd = $bd;
     }
 
-    public function LerTodos() {
+    public function lerTodos() {
         $sql = "SELECT * FROM usuarios";
-        $stmt = $this->bd->prepare($sql);
-        $stmt->execute();
+        $resultado = $this->bd->query($sql);
+        $resultado->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $resultado->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function LerUsuario($nome) {
+    public function lerUsuario($nome) {
         $nome = "%" . $nome . "%";
         $sql = "SELECT * FROM usuarios WHERE nome LIKE :nome";
-        $stmt = $this->bd->prepare($sql);
-        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
-        $stmt->execute();
+        $resultado = $this->bd->prepare($sql);
+        $resultado->bindParam(':nome', $nome, PDO::PARAM_STR);
+        $resultado->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $resultado->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function pesquisarUsuario($id){
+        $sql = "SELECT * FROM usuarios WHERE id = :id";
+        $resultado = $this->bd->prepare($sql);
+        $resultado->bindParam(':id', $id);
+        $resultado->execute();
+    }
+
+    
     public function cadastrar() {
         $senha_hash = password_hash($this->senha, PASSWORD_DEFAULT);
         $sql = "INSERT INTO usuarios (nome, email, senha, endereco, telefone) VALUES (:nome, :email, :senha, :endereco, :telefone)";
@@ -44,6 +62,10 @@ class Usuario {
         $stmt->bindParam(':telefone', $this->telefone, PDO::PARAM_STR); // trocado de INT pra STR, telefones podem ter traços e parênteses
 
         return $stmt->execute();
+    }
+
+    public function atualizar(){
+        $senha_hash
     }
 
     public function excluir() {

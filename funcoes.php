@@ -5,7 +5,7 @@ include_once 'objetos/usuario.php';
 
 $banco = new database();
 $bd = $banco->conectar();
-$a = new Usuario($bd);
+$u = new Usuario($bd);
 $usuarios = null;
 $usuario = null;
 
