@@ -65,7 +65,23 @@ class Usuario {
     }
 
     public function atualizar(){
-        $senha_hash
+        $senha_hash = password_hash($this->senha, PASSWORD_DEFAULT);
+        $sql = "UPDATE usuarios SET nome = :nome, email = :email, senha = :senha, endereco = :endereco, telefone = :telefone, tipo WHERE id = :id";
+        $stmt = $thiis->bd->prepare($sql);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_STR)
+        $stmt->bindParam(':nome', $this->nome, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
+        $stmt->bindParam(':senha', $this->senha, PDO::PARAM_STR);
+        $stmt->bindParam(':endereco', $this->endereco, PDO::PARAM_INT);
+        $stmt->bindParam(':telefone', $this->telefone, PDO::PARAM_STR);
+        $stmt->bindParam(':tipo', $this->tipo, PDO::PARAM_STR);
+
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     public function excluir() {
@@ -99,4 +115,7 @@ class Usuario {
         }
     }
 }
+
+
+
 ?>
