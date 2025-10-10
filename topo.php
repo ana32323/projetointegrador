@@ -5,9 +5,9 @@
 
 <?php endif; ?>
 
-<h1><center>catalogo_alimentos</center></h1>
+<h1><center>catalogo de alimento</center></h1>
 <a href="index.php">Inicio</a>
-<a href="Usuario.php">Usuario</a>
-<a href="painelUsuario">painel Usuario</a>
+<a href="cadastro.php">Cadastro Usuario</a>
+
 
 

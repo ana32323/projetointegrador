@@ -5,8 +5,8 @@ include_once "objetos/UsuarioController.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller = new UsuarioController();
 
-    if (isset($_POST['cadastrar']) && isset($_POST['usuario'])) {
-        $controller->cadastrarUsuario($_POST['usuario']);
+    if (isset($_POST['cadastrar'])) {
+        $controller->cadastrarUsuario($_POST['usuarios']);
     }
 }
 ?>
@@ -76,25 +76,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     <?php elseif (isset($_GET['msg'])): ?>
         <div class="mensagem" style="color: green;">
-            ✅ <?= htmlspecialchars($_GET['msg']) ?>
+             <?= htmlspecialchars($_GET['msg']) ?>
         </div>
     <?php endif; ?>
 
     <form action="cadastro.php" method="post" enctype="multipart/form-data">
         <label for="nome">Nome</label>
-        <input type="text" name="usuario[nome]" id="nome" required>
+        <input type="text" name="usuarios[nome]" id="nome" required>
 
         <label for="email">E-mail</label>
-        <input type="email" name="usuario[email]" id="email" required>
+        <input type="email" name="usuarios[email]" id="email" required>
 
         <label for="senha">Senha</label>
-        <input type="password" name="usuario[senha]" id="senha" required>
+        <input type="password" name="usuarios[senha]" id="senha" required>
 
         <label for="endereco">Endereço</label>
-        <input type="text" name="usuario[endereco]" id="endereco">
+        <input type="text" name="usuarios[endereco]" id="endereco">
 
         <label for="telefone">Telefone</label>
-        <input type="text" name="usuario[telefone]" id="telefone">
+        <input type="text" name="usuarios[telefone]" id="telefone">
 
         <button type="submit" name="cadastrar">Cadastrar</button>
     </form>

@@ -2,21 +2,21 @@
 
 include_once 'configs/database.php';
 include_once 'objetos/usuario.php';
-
 include_once 'objetos/UsuarioController.php';
+include_once 'session.php';
 
 $controller = new UsuarioController();
 $Usuario = $controller->index();
-global $Usuarios;
+global $usuario;
 
 $u = "";
 
-if($_SERVER['REQUEST_METHOD']=== 'POST'){
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(isset($_POST['pesquisa'])){
         $u = $controller->pesquisarUsuario($_POST['pesquisa']);
   }
 
-} elseif($_SERVER['REQUEST_METHOD']=== "GET"){
+} elseif($_SERVER['REQUEST_METHOD'] === "GET"){
     if(isset($_GET['excluir'])){
         $controller->excluirUsuario($_GET['excluir']);
     }
@@ -39,54 +39,38 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
     <tr>
         <td>ID</td>
         <td>Nome</td>
-        <td>E-mail</td>
+        <td>Email</td>
         <td>Endereco</td>
         <td>Telefone</td>
-</tr>
+        <td>Senha</td>
+    </tr>
+ 
 
-   <?php if($Usuarios) : ?>
-    <?php foreach($usuarios as $Usuario) : ?>
-        <tr>
-            <td><?=$usuario->id ?></td>
-            <td><?=$usuario->nome ?></td>
-            <td><?=$usuario->email ?></td>
-            <td><?=$usuario->endereco ?></td>
-            <td><?=$usuario->telefone ?></td>
 
-            <?php if($SESSION['usuario']->id == $usuario->id) : ?>
+   <?php if($Usuario) : ?>
 
-                <td><a href="atualizar.php?alterar=<?= $usuario->id ?>">Alterar</a></td>
-                <td><a href="index.php?excluir=<?= $usuario->id ?>">Excluir</a></td>
+        <?php foreach($Usuario as $u) : ?>
+
+            <tr>
+                <td><?=$u->id ?></td>
+                <td><?=$u->nome ?></td>
+                <td><?=$u->email ?></td>
+                <td><?=$u->endereco ?></td>
+                <td><?=$u->telefone ?></td>
+
+                <?php if($_SESSION['usuario']->id == $u->id) : ?>
+
+                    <td><a href="atualizar.php?alterar=<?= $u->id ?>">Alterar</a></td>
+                    <td><a href="index.php?excluir=<?= $u->id ?>">Excluir</a></td>
                 <?php endif; ?>
-
-                <?php endforeach; ?>
-                <?php endif; ?>
-
-            </table>
-
-            <table>
-                <tr>
-                    <td>ID</td>
-                    <td>Nome</td>
-                    <td>E-mail</td>
-                    <td>Endereco</td>
-                    <td>Telefone</td>
             </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
-        <?php if($u) : ?>
-            <?php foreach ($u as $linha): ?>
-                <tr>
-                    <td><?= $linha->id ?></td>
-                    <td><?= $linha->nome ?></td>
-                    <td><?= $linha->email ?></td>
-                    <td><?= $linha->endereco ?></td>
-                    <td><?= $linha->telefone ?></td>
-            </tr>
+    </table>
+
             
-            <?php endforeach ?>
-          <?php endif ?>
-          
-            
-        </table>     
+
+         
 </body>
 </html>

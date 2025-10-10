@@ -7,7 +7,7 @@ class DataBase{
 
      private $usuario = "root";
 
-     private $senha = "123456789";
+     private $senha = "123456";
      
      public $con;
 

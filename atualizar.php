@@ -1,13 +1,13 @@
 <?php
 
  include_once "objetos/UsuarioController.php";
- include_once "sessio.php";
+ include_once "session.php";
  
 
  $controller = new UsuarioController();
 
  if($_SERVER['REQUEST_METHOD']=== 'GET' && isset($_GET['alterar'])){
-    $a = $controller->localizarUsuario($_GET['alterar']);
+    $u = $controller->localizarUsuario($_GET['alterar']);
 
  }elseif ($_SERVER['REQUEST_METHOD']=== 'POST' && isset($_POST['usuario'])){
     $controller->atualizarUsuario($_POST['usuario']);
@@ -27,14 +27,14 @@
  <body>
    <?php include_once "topo.php" ?>
 
-    <h1>atualizar Usuario</h1>
+    <h1>Atualizar Usuario</h1>
 
     <form action="atualizar.php" method="post">
     
-    <input type="text" name="usuario[id]" id="id" value="<?= $a->id?>" hidden>
+    <input type="text" name="usuario[id]" id="id" value="<?= $u->id?>" hidden>
 
     <label for="nome">Nome</label>
-    <input type="text" name="usuario[nome]" id="nome" value="<?= $u->nome?>" >
+    <input type="text" name="usuario[nome]" id="nome" value="<?= $u->nome?>">
 
     <label for="email">E-mail</label>
     <input type="text" name="usuario[email]" id="email" value="<?= $u->email?>" >
@@ -48,12 +48,9 @@
     <label for="telefone">Telefone</label>
     <input type="text" name="usuario[telefone]" id="telefone" value="<?= $u->telefone?>" >
 
-    <select name="usuarios[tipo]">
-       <option value="USR">Usuario</option>
-       <option value="ADM">admin</option>
-    </select>
+   
     
-    <button name="cadastrar">Cadastrar</button>
+    <button name="alterar">Alterar</button>
 
  </form>
  </body>

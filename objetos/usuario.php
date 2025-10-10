@@ -13,12 +13,8 @@ class Usuario {
 
     public $telefone;
 
-    public $tipo;
-
     private $bd;
 
-
-    private $bd;
 
     public function __construct($bd) {
         $this->bd = $bd;
@@ -36,7 +32,7 @@ class Usuario {
         $nome = "%" . $nome . "%";
         $sql = "SELECT * FROM usuarios WHERE nome LIKE :nome";
         $resultado = $this->bd->prepare($sql);
-        $resultado->bindParam(':nome', $nome, PDO::PARAM_STR);
+        $resultado->bindParam(':nome', $nome);
         $resultado->execute();
 
         return $resultado->fetchAll(PDO::FETCH_OBJ);
@@ -47,6 +43,8 @@ class Usuario {
         $resultado = $this->bd->prepare($sql);
         $resultado->bindParam(':id', $id);
         $resultado->execute();
+
+        return $resultado->fetch(PDO::FETCH_OBJ);
     }
 
     
@@ -66,17 +64,16 @@ class Usuario {
 
     public function atualizar(){
         $senha_hash = password_hash($this->senha, PASSWORD_DEFAULT);
-        $sql = "UPDATE usuarios SET nome = :nome, email = :email, senha = :senha, endereco = :endereco, telefone = :telefone, tipo WHERE id = :id";
-        $stmt = $thiis->bd->prepare($sql);
-        $stmt->bindParam(':id', $this->id, PDO::PARAM_STR)
+        $sql = "UPDATE usuarios SET nome = :nome, email = :email, senha = :senha, endereco = :endereco, telefone = :telefone, WHERE id = :id";
+        $stmt = $this->bd->prepare($sql);
         $stmt->bindParam(':nome', $this->nome, PDO::PARAM_STR);
         $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
         $stmt->bindParam(':senha', $this->senha, PDO::PARAM_STR);
         $stmt->bindParam(':endereco', $this->endereco, PDO::PARAM_INT);
         $stmt->bindParam(':telefone', $this->telefone, PDO::PARAM_STR);
-        $stmt->bindParam(':tipo', $this->tipo, PDO::PARAM_STR);
-
-        if($stmt->execute()){
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        
+     if($stmt->execute()){
             return true;
         }else{
             return false;
