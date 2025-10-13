@@ -64,7 +64,7 @@ class Usuario {
 
     public function atualizar(){
         $senha_hash = password_hash($this->senha, PASSWORD_DEFAULT);
-        $sql = "UPDATE usuarios SET nome = :nome, email = :email, senha = :senha, endereco = :endereco, telefone = :telefone, WHERE id = :id";
+        $sql = "UPDATE usuarios SET nome = :nome, email = :email, senha = :senha, endereco = :endereco, telefone = :telefone WHERE id = :id";
         $stmt = $this->bd->prepare($sql);
         $stmt->bindParam(':nome', $this->nome, PDO::PARAM_STR);
         $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
@@ -80,6 +80,8 @@ class Usuario {
         }
 
     }
+
+
 
     public function excluir() {
         $sql = "DELETE FROM usuarios WHERE id = :id";

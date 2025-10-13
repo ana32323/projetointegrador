@@ -54,7 +54,7 @@ class UsuarioController {
         $this->usuarios->telefone = $dados['telefone'];
 
         if($this->usuarios->atualizar()){
-            header("locationa: listarUsuario");
+            header("location: index.php");
             exit;
         }
 
