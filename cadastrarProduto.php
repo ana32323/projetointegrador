@@ -5,9 +5,9 @@ include_once 'objetos/ProdutoController.php';
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $controller = new ProdutoController();
 
-    if(isset($_POST['cadastrar'])){
-        $controller->cadastrarProduto($_POST['produto']);
-    }
+  if(isset($_POST['cadastrar'])){
+    $controller->cadastrarProduto($_POST['produto'], $_FILES['produto']);
+  }
 }
 
 ?>
@@ -20,6 +20,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <title>Cadastro de Produtos</title>
 </head>
 <body>
+    <?php include_once "topo.php" ?>
     <h1>Cadastro de Produtos</h1>
 
     <form action="cadastrarProduto.php" method="post">
@@ -35,12 +36,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <label for="fileToUpload">img</label>
         <input type="file" name="produto[fileToUpload]" id="fileToUpload">
 
+    
         <button name="cadastrar">Cadastrar</button>
 
         <br>
 
-</form>    
-    
-    
+        
+
+</form>       
 </body>
 </html>

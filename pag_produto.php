@@ -1,6 +1,11 @@
 <?php
 
+include_once "configs/database.php";
 include_once "objetos/ProdutoController";
+include_once "objetos/produto.php";
+include_once "topo.php";
+include_once "session.php";
+
 
 
 $controller = new ProdutoController();
@@ -12,10 +17,10 @@ $p = null;
 if($_SERVER['REQUEST_METHOD']=== 'POST'){
     if(isset($_POST['pesquisa'])){
         $p = $controller->pesquisarProduto($_POST['pesquisa']);
-    }    
-} elseis($_SERVER['REQUEST_METHOD']=== "GET"){
+    }       
+}elseif($_SERVER['REQUEST_METHOD']=== "GET"){
     if(isset($_GET['excluir'])){
-        $controller->excluirProduto($_GET['excluir'])
+        $controller->excluirProduto($_GET['excluir']);
     }
 }
 
@@ -26,9 +31,14 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produto Cadastrados</title>
+    <title>Produto Cadastrados</title>    
 </head>
 <body>
+
+<a href="cadastrarproduto.php">Cadastrar Produto</a>
+
+ <h1>Produtos Cadastrados</h1>
+
     <table>
         <td>ID</td>
         <td>Nome</td>
