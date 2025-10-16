@@ -2,12 +2,15 @@
 
 include_once 'objetos/ProdutoController.php';
 
+
+include_once 'objetos/ProdutoController.php';
+
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $controller = new ProdutoController();
 
-  if(isset($_POST['cadastrar'])){
-    $controller->cadastrarProduto($_POST['produto'], $_FILES['produto']);
-  }
+    if(isset($_POST['cadastrar'])){
+        $controller->cadastrarProduto($_POST['produto'], $_FILES);
+    }
 }
 
 ?>
@@ -23,26 +26,21 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <?php include_once "topo.php" ?>
     <h1>Cadastro de Produtos</h1>
 
-    <form action="cadastrarProduto.php" method="post">
-        <label for="nome">Nome</label>
-        <input type="text" name="produto[nome]" id="nome">
+   <form action="cadastrarProduto.php" method="post" enctype="multipart/form-data">
+    <label for="nome">Nome</label>
+    <input type="text" name="produto[nome]" id="nome" required>
 
-        <label for="preco">Preco</label>
-        <input type="text" name="produto[preco]" id="preco">
+    <label for="preco">Preço</label>
+    <input type="text" name="produto[preco]" id="preco" required>
 
-        <label for="descricao">Descricao</label>
-        <input type="text" name="produto[descricao]" id="descricao">
+    <label for="descricao">Descrição</label>
+    <input type="text" name="produto[descricao]" id="descricao">
 
-        <label for="fileToUpload">img</label>
-        <input type="file" name="produto[fileToUpload]" id="fileToUpload">
+    <label for="fileToUpload">Imagem</label>
+    <input type="file" name="fileToUpload" id="fileToUpload" required>
 
-    
-        <button name="cadastrar">Cadastrar</button>
+    <button name="cadastrar">Cadastrar</button>
+</form>
 
-        <br>
-
-        
-
-</form>       
 </body>
 </html>

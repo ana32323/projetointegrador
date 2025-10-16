@@ -28,7 +28,7 @@ Class ProdutoController{
         return $this->produto->pesquisarProduto($id);
     }
 
-    public function cadastrar($dados, $arquivo){
+    public function cadastrarProduto($dados, $arquivo){
          if($this->upload($arquivo)){
         $this->produto->nome = $dados['nome'];
         $this->produto->preco = $dados['preco'];
@@ -44,50 +44,54 @@ Class ProdutoController{
       return false;
     }
 
-    public function upload($arquivo){
-        $target_dir = "uploads/";
-        $upload0k = 1;
-        $target_file = $target_dir . $arquivo["name"]["fileToUpload"];
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+   public function upload($arquivo){
+    $target_dir = "uploads/";
+    $uploadOk = 1;
 
-        $random_name = uniqid('img_', true).".". pathinfo($arquivo["name"]["fileToUpload"], PATHINFO_EXTENSION);
-        $this->img_name = $random_name;
-        $upload_file = $target_dir . $random_name;
+    $fileName = basename($arquivo['fileToUpload']['name']);
+    $target_file = $target_dir . $fileName;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-        $check = getimagesize($arquivo["tmp_name"]["fileToUpload"]);
+    $random_name = uniqid('img_', true) . "." . $imageFileType;
+    $this->img_name = $random_name;
+    $upload_file = $target_dir . $random_name;
 
-        if($check !== false){
-            $upload0k = 1;
-        }else{
-            $upload0k = 0;
-            echo "não é imagem";
-        }
+    $check = getimagesize($arquivo['fileToUpload']['tmp_name']);
+    if($check !== false){
+        $uploadOk = 1;
+    } else {
+        $uploadOk = 0;
+        echo "Não é imagem.";
+    }
 
-        if(file_exists($upload_file)){
-            $upload0k = 0;
-            echo "ja existe";
-        }
+    if(file_exists($upload_file)){
+        $uploadOk = 0;
+        echo "Arquivo já existe.";
+    }
 
-        if($arquivo["size"]["fileToUpload"] > 500000){
-            $upload0k = 0;
-            echo "imagem grande";
-        }
+    if($arquivo['fileToUpload']['size'] > 500000){
+        $uploadOk = 0;
+        echo "Imagem muito grande.";
+    }
 
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif"){
-            $upload0k = 0;
-            echo "tipo diferente";
-        }
+    if(!in_array($imageFileType, ["jpg", "png", "jpeg", "gif"])){
+        $uploadOk = 0;
+        echo "Formato não permitido.";
+    }
 
-        if($upload0k == 0){
+    if($uploadOk == 0){
+        return false;
+    } else {
+        if(move_uploaded_file($arquivo['fileToUpload']['tmp_name'], $upload_file)){
+            $this->produto->imagem = $random_name;
+            return true;
+        } else {
+            echo "Erro ao fazer upload.";
             return false;
-        }else{
-            if(move_uploaded_file($arquivo["tmp_name"]["fileToUpload"], $upload_file)){
-                return true;
-            }else{
-                return false;
-            }
         }
     }
+}
+
 
     public function atualizarProduto($dados){
         $this->produto->id = $dados['id'];
