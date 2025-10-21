@@ -1,76 +1,117 @@
-<?php
-
-include_once 'configs/database.php';
-include_once 'objetos/usuario.php';
-include_once 'objetos/UsuarioController.php';
-include_once 'session.php';
-
-$controller = new UsuarioController();
-$Usuario = $controller->index();
-global $usuario;
-
-$u = "";
-
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    if(isset($_POST['pesquisa'])){
-        $u = $controller->pesquisarUsuario($_POST['pesquisa']);
-  }
-
-} elseif($_SERVER['REQUEST_METHOD'] === "GET"){
-    if(isset($_GET['excluir'])){
-        $controller->excluirUsuario($_GET['excluir']);
-    }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto Integrador</title>
- </head>
- <body>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogo Alimentos</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  
+  <link rel="stylesheet" href="style/style.css">
+</head>
 
-  <h2>Usuario Cadastrados</h2>
+<body>
+  <main class="container">
 
-  <table>
-    <tr>
-        <td>ID</td>
-        <td>Nome</td>
-        <td>Email</td>
-        <td>Endereco</td>
-        <td>Telefone</td>
-        <td>Senha</td>
-    </tr>
- 
-
-
-   <?php if($Usuario) : ?>
-
-        <?php foreach($Usuario as $u) : ?>
-
-            <tr>
-                <td><?=$u->id ?></td>
-                <td><?=$u->nome ?></td>
-                <td><?=$u->email ?></td>
-                <td><?=$u->endereco ?></td>
-                <td><?=$u->telefone ?></td>
-
-                <?php if($_SESSION['usuario']->id == $u->id) : ?>
-
-                    <td><a href="atualizar.php?alterar=<?= $u->id ?>">Alterar</a></td>
-                    <td><a href="index.php?excluir=<?= $u->id ?>">Excluir</a></td>
-                <?php endif; ?>
-            </tr>
-        <?php endforeach; ?>
-    <?php endif; ?>
-
-    </table>
-
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Página Iniciar</a>
             
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Administrador
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Cadastrar Usuario</a></li>
+                <li><a class="dropdown-item" href="#">Cadastrar Produto</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                
+              </ul>
+            </li>
+            
+           
+          </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+            <button class="btn btn-outline-success" type="submit">Login</button>
+          </form>
+        </div>
+      </div>
+    </nav>
 
-         
+    <div class="row car">
+
+      <div class="col">
+
+        <div id="carouselExampleIndicators" class="carousel slide">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src = d-block w-100" alt="...">
+            </div>
+
+            <div class="carousel-item">
+              <img src class="d-block w-100" alt="...">
+            </div>
+
+            <div class="carousel-item">
+              <img src=" class="d-block w-100" alt="...">
+            </div>
+          </div>
+
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <h1>
+      <center>Catálogo de Alimentos</center>
+    </h1>
+
+    <div class="row">
+      <div class="col d-flex justify-content-center">
+        <form action="index.php" method="post" class="form-pesquisa">
+          <input type="text" name="pesquisa" class="form-control" placeholder=>
+
+          <div class="d-flex justify-content-center" style="margin-top: 10px">
+            <button class="btn btn-primary mb-3" style="margin-right: 10px">Pesquisa</button>
+            <button class="btn btn-primary mb-3" style="margin-right: 10px">Limpar Pesquisa</button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
 </body>
+
 </html>

@@ -5,6 +5,7 @@ include_once "objetos/ProdutoController";
 include_once "objetos/produto.php";
 include_once "topo.php";
 include_once "session.php";
+include_once "principal.php";
 
 
 

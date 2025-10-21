@@ -1,9 +1,7 @@
 <?php
 
-include_once 'objetos/ProdutoController.php';
+include_once "objetos/ProdutoController.php";
 
-
-include_once 'objetos/ProdutoController.php';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $controller = new ProdutoController();
@@ -15,6 +13,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 ?>
 
+
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -24,6 +26,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </head>
 <body>
     <?php include_once "topo.php" ?>
+    
+    
+    
     <h1>Cadastro de Produtos</h1>
 
    <form action="cadastrarProduto.php" method="post" enctype="multipart/form-data">
