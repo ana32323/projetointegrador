@@ -19,11 +19,11 @@ public function lerTodos(){
     $resultado = $this->bd->query($sql);
     $resultado->execute();
 
-    return $resultado->fetchAll(PDO::FETCH_OBJ);
+    return $resultado->fetchAll(PDO::FETCH_ASSOC);
 }
 
 public function lerProduto($nome){
-    $nome = "%" . nome . "%";
+    $nome = "%" . $nome . "%";
     $sql = "SELECT * FROM produtos WHERE nome LIKE :nome";
     $resultado = $this->bd->prepare($sql);
     $resultado->bindParam(':nome', $nome);
@@ -48,6 +48,7 @@ public function cadastrar(){
     $stmt->bindParam(':preco', $this->preco, PDO::PARAM_STR);
     $stmt->bindParam(':descricao', $this->descricao, PDO::PARAM_STR);
     $stmt->bindParam(':imagem', $this->imagem, PDO::PARAM_STR);
+
 
     if($stmt->execute()){
         return true;

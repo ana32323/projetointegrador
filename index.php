@@ -1,3 +1,16 @@
+<?php
+
+include_once "configs/database.php";
+include_once "objetos/produto.php";
+include_once "objetos/ProdutoController.php";
+
+$controller = new ProdutoController();
+$produtos = $controller->index();
+global $produtos;
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -61,7 +74,7 @@
 
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src = d-block w-100" alt="...">
+              <img src = d-block w-100 alt="...">
             </div>
 
             <div class="carousel-item">
@@ -107,11 +120,33 @@
 
     </div>
 
+    <div class="row">
+     
+        <?php if ($produtos) : ?>
+          <?php foreach($produtos as $produto) : ?>
+            <section class="col painel-produtos">
+            <div class="card" style="width: 18rem;">
+              <img src="uploads/<?= $produto["imagem"] ?>" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"> <?= $produto["nome"] ?></h5>
+                <p class="card-text"> <?= $produto["descricao"] ?></p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+          </div>
+          </section>
+           
+          <?php endforeach ?>
+        <?php endif ?>
+   
+
+    </div>
+
 
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
 </body>
+
 
 </html>

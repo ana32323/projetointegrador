@@ -6,6 +6,7 @@ include_once  "produto.php";
 class ProdutoController{
     private $bd;
     private $produto;
+    private $img_name;
 
     public function __construct(){
         $banco = new Database();
@@ -25,16 +26,21 @@ class ProdutoController{
         return $this->produto->pesquisarProduto($id);
     }
 
-    public function cadastrarProduto($dados){
+    public function cadastrarProduto($dados, $arquivo){
+
+        if($this->upload($arquivo)){
         $this->produto->nome = $dados['nome'];
         $this->produto->preco = $dados['preco'];
         $this->produto->descricao = $dados['descricao'];
-        $this->produto->imagem = $dados['imagem'];
+        $this->produto->imagem = $this->img_name;
 
         if($this->produto->cadastrar()){
             header("location: index.php");
             exit();
         }
+
+        }
+
 
         return false;
     }
@@ -77,6 +83,7 @@ class ProdutoController{
             return false;
         }else{
             if(move_uploaded_file($arquivo["tmp_name"]["fileToUpload"], $upload_file)){
+                return true;
           }else{
             return false;
           }
@@ -84,12 +91,6 @@ class ProdutoController{
 
 
      }
-
-
-
-
-
-
 
      public function atualizarProduto($dados){
         $this->produto->id = $dados['id'];

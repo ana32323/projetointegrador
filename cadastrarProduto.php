@@ -7,7 +7,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $controller = new ProdutoController();
 
     if(isset($_POST['cadastrar'])){
-        $controller->cadastrarProduto($_POST['produto'], $_FILES);
+        $controller->cadastrarProduto($_POST['produto'], $_FILES['produto']);
     }
 }
 
@@ -42,7 +42,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <input type="text" name="produto[descricao]" id="descricao">
 
     <label for="fileToUpload">Imagem</label>
-    <input type="file" name="fileToUpload" id="fileToUpload" required>
+    <input type="file" name="produto[fileToUpload]" id="fileToUpload" required>
 
     <button name="cadastrar">Cadastrar</button>
 </form>
